@@ -23,8 +23,8 @@ INSERT INTO papeis(name) VALUES (
 
 -- senha: 123 (BCrypt)
 INSERT INTO usuarios(username, password, email) VALUES
-  ('admin', '$2a$10$8rV3o5QH9xg6M2YpG7v3TOh0n3mJ6n5mJxGm0xLx3Jg2h1m4k0m7e', 'admin@mottu.com'),
-  ('usuario',  '$2a$10$8rV3o5QH9xg6M2YpG7v3TOh0n3mJ6n5mJxGm0xLx3Jg2h1m4k0m7e', 'usuario@mottu.com');
+  ('admin', '$2b$10$gsK1pK56DKoelXscsHmXJ.dhVhwem.L8C9rdLGF7k/L.TBQ1rKEA6', 'admin@mottu.com'),
+  ('usuario',  '$2b$10$gsK1pK56DKoelXscsHmXJ.dhVhwem.L8C9rdLGF7k/L.TBQ1rKEA6', 'usuario@mottu.com');
 
 INSERT INTO usuarios_papeis(usuario_id, papel_id)
   SELECT u.id, p.id FROM usuarios u, papeis p WHERE u.username='admin' AND p.name='ROLE_ADMIN';
