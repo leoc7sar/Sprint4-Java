@@ -9,7 +9,7 @@ resources:
 - repo: self
 
 variables:
-  tag: '$(Build.BuildId)'
+  tag: '$mottu:image : v1'
 
 stages:
 - stage: Build
@@ -26,4 +26,4 @@ stages:
         command: build
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
-          $(tag)
+          $mottu:image : v1
