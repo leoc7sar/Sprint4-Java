@@ -1,0 +1,34 @@
+name: CD
+
+on:
+  workflow_run:
+    workflows: [ "CI" ]   # nome do workflow CI (lá em cima: name: CI)
+    types:
+      - completed
+
+jobs:
+  deploy:
+    # Só continua se o CI tiver passado com sucesso
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar artefato gerado pelo CI
+        uses: actions/download-artifact@v4
+        with:
+          name: app-build
+          path: app-build
+
+      # Aqui entram as variáveis de ambiente protegidas (do banco, etc.)
+      - name: Deploy da aplicação
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: |
+          echo "Fazendo deploy..."
+          # Exemplo genérico – você troca pelos comandos reais:
+          # docker build -t minha-imagem:latest app-build
+          # docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+          # docker push minha-imagem:latest
+          # ou ssh para servidor, kubectl apply, etc.
