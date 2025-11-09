@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      # Exemplo: se seu projeto for Node.js
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Rodar testes
+        run: npm test
+
+      # Gera um artefato (por ex. build da aplicação)
+      - name: Gerar build
+        run: npm run build
+
+      - name: Salvar artefato da build
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-build
+          path: dist/   # ajuste para a pasta de build do seu projeto
